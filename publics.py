@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 import hashlib
-
+load_dotenv('.local_env')
 load_dotenv()
 
 
@@ -20,3 +20,8 @@ def create_hash(s):
     hash_object = hashlib.sha256()
     hash_object.update(s.encode('utf-8'))
     return hash_object.hexdigest()
+
+
+class Consts:
+    BOT_TOKEN = os.getenv('BOT_TOKEN')
+    TELEGRAM_USER_ID = os.getenv('TELEGRAM_USER_ID')

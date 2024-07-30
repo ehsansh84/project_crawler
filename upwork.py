@@ -3,14 +3,17 @@ import os
 import re
 import asyncio
 from bs4 import BeautifulSoup
-from publics import mdb, create_hash
+from publics import mdb, create_hash, Consts
 from aiogram import Bot
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+# from dotenv import load_dotenv
+
+# load_dotenv('.local_env')
 
 col_project = mdb()['project']
 upwork_rss_url = os.getenv('upwork_rss_url')
-bot_token = os.getenv('BOT_TOKEN')
-user_id = os.getenv('USER_ID')
+# bot_token = os.getenv('BOT_TOKEN')
+# user_id = os.getenv('USER_ID')
 not_interested_skills = ['TradingView']
 interested_skill = ['Data Processing', 'Python', 'Data Scraping', 'WordPress', 'Automation', 'Microsoft Excel', 'Linux',
                     'Automation', 'API', 'Data Extraction', 'Data Entry']
@@ -51,7 +54,7 @@ def prepare_message(message):
 async def send_telegram_message(bot, message, apply_link):
     apply_button = InlineKeyboardButton(text="Apply", url=apply_link)
     reply_markup = InlineKeyboardMarkup(inline_keyboard=[[apply_button]])
-    await bot.send_message(chat_id=user_id, text=message, reply_markup=reply_markup, parse_mode='HTML')
+    await bot.send_message(chat_id=Consts.TELEGRAM_USER_ID, text=message, reply_markup=reply_markup, parse_mode='HTML')
 
 
 def get_budget(item):
@@ -81,7 +84,7 @@ def get_skills(item):
 async def parse_upwork_rss(url):
     parsed_data = []
     feed = feedparser.parse(url)
-    bot = Bot(token=bot_token)
+    bot = Bot(token=Consts.BOT_TOKEN)
 
     try:
         for i, entry in enumerate(feed.entries):
