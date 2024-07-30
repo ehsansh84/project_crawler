@@ -6,14 +6,10 @@ from bs4 import BeautifulSoup
 from publics import mdb, create_hash, Consts
 from aiogram import Bot
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-# from dotenv import load_dotenv
-
-# load_dotenv('.local_env')
+from time import sleep
 
 col_project = mdb()['project']
 upwork_rss_url = os.getenv('upwork_rss_url')
-# bot_token = os.getenv('BOT_TOKEN')
-# user_id = os.getenv('USER_ID')
 not_interested_skills = ['TradingView']
 interested_skill = ['Data Processing', 'Python', 'Data Scraping', 'WordPress', 'Automation', 'Microsoft Excel', 'Linux',
                     'Automation', 'API', 'Data Extraction', 'Data Entry']
@@ -107,17 +103,17 @@ async def parse_upwork_rss(url):
             if col_project.find_one({'url_hash': url_hash}) is None:
                 col_project.insert_one(item)
 
-            message = prepare_message(item['summary'])
-            message = f'''
-{get_budget(item)}
-Category: {item["category"]}
-Country: {item["country"]}
-Skills: {get_skills(item)}
-
-{message}
-'''[:1000]
-            await send_telegram_message(bot, message, item['url'])
-            parsed_data.append(item)
+                message = prepare_message(item['summary'])
+                message = f'''
+    {get_budget(item)}
+    Category: {item["category"]}
+    Country: {item["country"]}
+    Skills: {get_skills(item)}
+    
+    {message}
+    '''[:1000]
+                await send_telegram_message(bot, message, item['url'])
+                parsed_data.append(item)
 
     finally:
         await bot.session.close()
@@ -126,4 +122,6 @@ Skills: {get_skills(item)}
 
 
 if __name__ == "__main__":
-    asyncio.run(parse_upwork_rss(upwork_rss_url))
+    for i in range(5):
+        asyncio.run(parse_upwork_rss(upwork_rss_url))
+        sleep(10)
