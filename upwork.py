@@ -22,10 +22,11 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 col_project = mdb()['project']
 upwork_rss_url = os.getenv('upwork_rss_url')
 not_interested_skills = ['TradingView', 'Machine Learning', 'Google Cloud Platform', 'Firebase', 'MetaTrader',
-                         'Embedded Application', 'MetaTrader', 'MQL 5', 'MQL 4', 'Forex Trading']
+                         'Embedded Application', 'MetaTrader', 'MQL 5', 'MQL 4', 'Forex Trading', 'Blockchain']
 interested_skill = ['Data Processing', 'Python', 'Data Scraping', 'WordPress', 'Automation', 'Microsoft Excel', 'Linux',
                     'Automation', 'API', 'Data Extraction', 'Data Entry', 'Web Crawling', 'Scripting', 'Pandas',
-                    'Python Script', 'Bot Development', 'Python Script', 'Data Cleaning', 'Data Collection']
+                    'Python Script', 'Bot Development', 'Python Script', 'Data Cleaning', 'Data Collection',
+                    'Web Scraping', 'Web Crawling', 'API Development']
 
 
 def extract(type, s):
